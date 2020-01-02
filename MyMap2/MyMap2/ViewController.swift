@@ -23,7 +23,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder() //キーボードを閉じる
-        var searchKeyword = textField.text
+        let searchKeyword = textField.text
         print(searchKeyword!) //!は強制アンラップ(ForcedUnwrapping), nilが入っていてもアンラップできてしまうので、アプリクラッシュの原因になる
         
         let geocoder = CLGeocoder()
@@ -44,6 +44,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
                                                                      latitudinalMeters: 500.0,
                                                                      longitudinalMeters:500.0)
                 }
+            } else {
+                print("no result")
+                let dialog = UIAlertController(title: "エラー", message: "検索結果がありません", preferredStyle: .alert)
+                dialog.addAction(UIAlertAction(title: "了解", style: .default, handler:nil))
+                self.present(dialog, animated: true, completion: nil)
             }
             
         })
